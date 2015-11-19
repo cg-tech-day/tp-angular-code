@@ -19,9 +19,34 @@
     <!-- endinject -->
     <!-- endbuild -->
 </head>
-<body data-ng-app="app" data-ng-controller="RwcAppCntl">
+<body ng-app="app">
 
-<div>Hello {{message}} !</div>
+<div ng-controller="SampleCntl as sample">
+
+    <form name="sample.myForm" novalidate>
+        <label>User name:</label>
+        <input type="text" name="userName" ng-model="sample.user.name" ng-required="true" ng-minlength="3"/>
+        <small ng-show="sample.isNameValid()">This field is not valid</small>
+        <label>User surname:</label>
+        <input type="text" name="userSurname" ng-model="sample.user.surname"/>
+        <label>User email:</label>
+        <input type="email" name="userEmail" ng-model="sample.user.email" ng-required="true"/>
+        <small ng-show="sample.myForm.userEmail.$error.required && sample.myForm.userEmail.$dirty">This field is
+            required
+        </small>
+        <small ng-show="sample.myForm.userEmail.$error.email && sample.myForm.userEmail.$dirty">Not valid email</small>
+        <label>Is customer</label>
+        <input type="checkbox" ng-model="sample.user.isCustomer" name="isCustomer" ng-true-value="'yes'"
+               ng-false-value="'no'"/>
+
+        <input type="password" ng-model="sample.user.password" name="password"/>
+        <input type="password" ng-model="sample.password2" name="password2"/>
+
+        <button ng-click="sample.submit()" ng-disabled="!sample.submitActive()">Submit</button>
+        <button type="reset" ng-click="sample.resetForm()">Reset</button>
+    </form>
+    <pre>{{sample.user}}</pre>
+</div>
 
 <!-- build:jsVendor({.tmp,app}) js/vendor.js -->
 <!-- bower:js -->
